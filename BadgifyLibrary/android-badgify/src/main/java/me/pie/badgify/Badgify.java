@@ -12,7 +12,7 @@ import java.util.List;
  */
 public final class Badgify {
 
-    private static String getLauncherClassName(Context context) {
+    public static String getLauncherClassName(Context context) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
@@ -27,12 +27,18 @@ public final class Badgify {
         return null;
     }
 
-    private static Manufacturer getDeviceManufacturer() {
+    public static Manufacturer getDeviceManufacturer() {
         String manufacturer = Build.MANUFACTURER;
         if (manufacturer.equalsIgnoreCase(Manufacturer.SAMSUNG.getCommonName())) {
             return Manufacturer.SAMSUNG;
         } else if (manufacturer.equalsIgnoreCase(Manufacturer.LG.getCommonName())) {
             return Manufacturer.LG;
+        } else if (manufacturer.equalsIgnoreCase(Manufacturer.SONY.getCommonName())) {
+            return Manufacturer.SONY;
+        } else if (manufacturer.equalsIgnoreCase(Manufacturer.HTC.getCommonName())) {
+            return Manufacturer.HTC;
+        } else if (manufacturer.equalsIgnoreCase(Manufacturer.XIAOMI.getCommonName())) {
+            return Manufacturer.XIAOMI;
         }
 
         return null;
@@ -40,67 +46,33 @@ public final class Badgify {
 
     public static void setBadge(Context context, int count) {
         Manufacturer manufacturer = Badgify.getDeviceManufacturer();
-        String launcherClassName = Badgify.getLauncherClassName(context);
 
-        if (launcherClassName == null) {
-            return;
-        }
-
-        Intent intent = null;
-
-        if (manufacturer != null) {
-            switch (manufacturer) {
-                case SAMSUNG:
-                    intent = new Intent("android.intent.action.BADGE_COUNT_UPDATE");
-                    intent.putExtra("badge_count", count);
-                    intent.putExtra("badge_count_package_name", context.getPackageName());
-                    intent.putExtra("badge_count_class_name", launcherClassName);
-                    break;
-                case SONY:
-                    intent.setAction("com.sonyericsson.home.action.UPDATE_BADGE");
-                    intent.putExtra("com.sonyericsson.home.intent.extra.badge.ACTIVITY_NAME", launcherClassName);
-                    intent.putExtra("com.sonyericsson.home.intent.extra.badge.SHOW_MESSAGE", true);
-                    intent.putExtra("com.sonyericsson.home.intent.extra.badge.MESSAGE", String.valueOf(count));
-                    intent.putExtra("com.sonyericsson.home.intent.extra.badge.PACKAGE_NAME", context.getPackageName());
-                    break;
-            }
-
-            if (intent != null) {
-                context.sendBroadcast(intent);
-            }
-        }
-
+        LauncherFactory.getLauncher(manufacturer).setBadge(context, count);
     }
 
 
     public static void removeBadge(Context context) {
         Manufacturer manufacturer = Badgify.getDeviceManufacturer();
-        String launcherClassName = Badgify.getLauncherClassName(context);
 
-        if (launcherClassName == null) {
-            return;
+        LauncherFactory.getLauncher(manufacturer).removeBadge(context);
+    }
+
+    public static class IntentExtras {
+        public static class DefaultIntentExtras {
+            public static final String INTENT_ACTION = "android.intent.action.BADGE_COUNT_UPDATE";
+            public static final String INTENT_EXTRA_BADGE_COUNT = "badge_count";
+            public static final String INTENT_EXTRA_PACKAGENAME = "badge_count_package_name";
+            public static final String INTENT_EXTRA_ACTIVITY_NAME = "badge_count_class_name";
+            public static final String INTENT_EXTRA_VIP_COUNT = "badge_vip_count";
         }
 
-        Intent intent = null;
-
-        if (manufacturer != null) {
-            switch (manufacturer) {
-                case SAMSUNG:
-                    break;
-                case SONY:
-                    intent = new Intent();
-                    intent.setAction("com.sonyericsson.home.action.UPDATE_BADGE");
-                    intent.putExtra("com.sonyericsson.home.intent.extra.badge.ACTIVITY_NAME", launcherClassName);
-                    intent.putExtra("com.sonyericsson.home.intent.extra.badge.SHOW_MESSAGE", false);
-                    intent.putExtra("com.sonyericsson.home.intent.extra.badge.MESSAGE", String.valueOf(0));
-                    intent.putExtra("com.sonyericsson.home.intent.extra.badge.PACKAGE_NAME", context.getPackageName());
-                    ;
-                    break;
-            }
-
-            if (intent != null) {
-                context.sendBroadcast(intent);
-            }
+        public static class SonyIntentExtras {
+            public static final String INTENT_ACTION = "com.sonyericsson.home.action.UPDATE_BADGE";
+            public static final String INTENT_EXTRA_PACKAGE_NAME = "com.sonyericsson.home.intent.extra.badge.PACKAGE_NAME";
+            public static final String INTENT_EXTRA_ACTIVITY_NAME = "com.sonyericsson.home.intent.extra.badge.ACTIVITY_NAME";
+            public static final String INTENT_EXTRA_MESSAGE = "com.sonyericsson.home.intent.extra.badge.MESSAGE";
+            public static final String INTENT_EXTRA_SHOW_MESSAGE = "com.sonyericsson.home.intent.extra.badge.SHOW_MESSAGE";
         }
     }
+
 }

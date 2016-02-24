@@ -15,7 +15,8 @@ public enum Manufacturer {
     ACER("Acer"),
     COOLPAD("Coolpad"),
     KYOCERA("Kyocera"),
-    ASUS("Asus");
+    ASUS("Asus"),
+    XIAOMI("Xiaomi");
 
     private String commonName;
 

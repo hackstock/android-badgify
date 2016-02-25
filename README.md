@@ -9,9 +9,9 @@ This is a library for adding badges to app icons on various devices. Below is an
 
 # Usage
 ## Setting Badges
-Badgify.setBadge(context,count);
+Badgify.setBadge(Context context,int count);
 ## Removing Badges
-Badgify.removeBad(context);
+Badgify.removeBadge(Context context);
 ## Getting Current Badge Value
 Badgify.getCurrentBadgeValue();
 

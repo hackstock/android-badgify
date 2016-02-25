@@ -23,6 +23,9 @@ public class LauncherFactory {
             case ASUS:
                 launcher = new AsusHomeLauncher();
                 break;
+            case UNKNOWN:
+                launcher = new DefaultHomeLauncher();
+                break;
             default:
                 launcher = new DefaultHomeLauncher();
                 break;

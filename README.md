@@ -4,7 +4,7 @@ This is a library for adding badges to app icons on various devices. Below is an
 ![enter image description here](https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSZggTI1u853w574t3Grnx6H-dIgH8ZDFo6G4T-sgvFBteqAd04)
 
 # Setup
-- Add compile 'me.pie:android-badgify:1.0.1' to build.gradle
+- Add compile 'me.pie:android-badgify:1.0.2' to build.gradle
 - Click "Sync project with gradle files" in android studio
 
 # Usage
@@ -12,6 +12,8 @@ This is a library for adding badges to app icons on various devices. Below is an
 Badgify.setBadge(context,count);
 ## Removing Badges
 Badgify.removeBad(context);
+## Getting Current Badge Value
+Badgify.getCurrentBadgeValue();
 
 ## Required Permissions
 Permission required are dependent on the manufacturer of the device. Be guided by the list of permissions below to know which one(s) to include in your AndroidManifest.xml.

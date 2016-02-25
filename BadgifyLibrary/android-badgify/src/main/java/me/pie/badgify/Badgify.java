@@ -11,6 +11,7 @@ import java.util.List;
  * Created by pie on 23/02/2016.
  */
 public final class Badgify {
+    private static int CURRENT_BADGE_VALUE = 0;
 
     public static String getLauncherClassName(Context context) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -41,13 +42,14 @@ public final class Badgify {
             return Manufacturer.XIAOMI;
         }
 
-        return null;
+        return Manufacturer.UNKNOWN;
     }
 
     public static void setBadge(Context context, int count) {
         Manufacturer manufacturer = Badgify.getDeviceManufacturer();
 
         LauncherFactory.getLauncher(manufacturer).setBadge(context, count);
+        Badgify.CURRENT_BADGE_VALUE = count;
     }
 
 
@@ -55,6 +57,11 @@ public final class Badgify {
         Manufacturer manufacturer = Badgify.getDeviceManufacturer();
 
         LauncherFactory.getLauncher(manufacturer).removeBadge(context);
+        Badgify.CURRENT_BADGE_VALUE = 0;
+    }
+
+    public static int getCurrentBadgeValue() {
+        return Badgify.CURRENT_BADGE_VALUE;
     }
 
     public static class IntentExtras {

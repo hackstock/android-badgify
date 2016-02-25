@@ -9,8 +9,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 3
+        versionName "1.0.2"
     }
     buildTypes {
         release {
@@ -29,7 +29,7 @@ dependencies {
 def siteUrl = 'https://github.com/hackstock/android-badgify'      // Homepage URL of the library
 def gitUrl = 'https://github.com/hackstock/android-badgify.git'   // Git repository URL
 group = "me.pie"
-version = '1.0.1'
+version = '1.0.2'
 
 install {
     repositories.mavenInstaller {
